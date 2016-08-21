@@ -8,10 +8,13 @@
 	<array>
 		<string>spero</string>
 	</array>
+
+	<!-- What are these for? -->
 	<key>foldingStartMarker</key>
 	<string>/\*\*|\{\s*$</string>
 	<key>foldingStopMarker</key>
 	<string>\*\*/|^\s*\}</string>
+
 	<key>keyEquivalent</key>
 	<string>^~S</string>
 	<key>name</key>
@@ -21,10 +24,6 @@
 		<dict>
 			<key>include</key>
 			<string>#comments</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#block-comments</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -64,16 +63,17 @@
 			<string>#parameter-list</string>
 		</dict>
 	</array>
+	
 	<key>repository</key>
 	<dict>
-		<!-- !#.*!# -->
-		<key>block-comments</key>
+		<key>comments</key>
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- ##.*## -->
 				<dict>
 					<key>begin</key>
-					<string>!#</key>
+					<string>##</key>
 					<key>captures</key>
 					<dict>
 						<key>0</key>
@@ -83,18 +83,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>!#</string>
+					<string>##</string>
 					<key>name</key>
 					<string>comment.block.spero</string>
 				</dict>
-			</array>
-		</dict>
 
-		<!-- ##[^\n]* -->
-		<key>comments</key>
-		<dict>
-			<key>patterns</key>
-			<array>
+				<!-- #.*\n -->
 				<dict>
 					<key>captures</key>
 					<dict>

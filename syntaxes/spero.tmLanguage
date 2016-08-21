@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleUUID</key>
+	<string>452017E8-0065-49EF-AB9D-7849B27D9367</string>
+	<key>fileTypes</key>
+	<array>
+		<string>spero</string>
+	</array>
+	<key>foldingStartMarker</key>
+	<string>/\*\*|\{\s*$</string>
+	<key>foldingStopMarker</key>
+	<string>\*\*/|^\s*\}</string>
+	<key>keyEquivalent</key>
+	<string>^~S</string>
+	<key>name</key>
+	<string>spero</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>include</key>
+			<string>#comments</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#block-comments</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#contexts</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#type-name</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#imports</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#literals</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#keywords</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#declarations</string>
+		</dict>
+
+		<dict>
+			<key>include</key>
+			<string>#inheritance</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#empty-parentheses</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#parameter-list</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<!-- !#.*!# -->
+		<key>block-comments</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>!#</key>
+					<key>captures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.comment.spero</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>!#</string>
+					<key>name</key>
+					<string>comment.block.spero</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- ##[^\n]* -->
+		<key>comments</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.comment.spero</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(#).*$\n?</string>
+					<key>name</key>
+					<string>comment.line.spero</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- [A-Z][a-z]+ -->
+		<key>type-name</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.class</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(\b([A-Z][\w]*))</string>
+		</dict>
+
+		<!-- use <import> | mod <name>. Highlighting currently broken -->
+		<key>imports</key>
+		<dict>
+			<key>begin</key>
+			<string>\b(use)\s+</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.import.spero</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>(?&lt;=[\n])</string>
+			<key>name</key>
+			<string>meta.import.spero</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#comments</string>
+				</dict>
+				<!-- This needs some work to get it to highlight right -->
+				<dict>
+					<key>match</key>
+					<string>([^]s{;.]+)\s\.\s*</string>
+					<key>name</key>
+					<string>variable.package.speroc</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>([^\s{;.]+)\s*</string>
+					<key>name</key>
+					<string>variable.import.spero</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>{</string>
+					<key>end</key>
+					<string>}</string>
+					<key>name</key>
+					<string>meta.import.selector.spero</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>variable.import.renamed-from.spero</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>keyword.other.arrow.spero</string>
+								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>variable.import.renamed-to.spero</string>
+								</dict>
+							</dict>
+							<key>match</key>
+							<string>(?x) \s*
+									([^\s.,}]+) \s*
+									(=&gt;) \s*
+									([^\s.,}]+) \s*</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>([^\s.,}]+)</string>
+							<key>name</key>
+							<string>variable.import.spero</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- Literals -->
+		<key>literals</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<!-- String -->
+				<dict>
+					<key>begin</key>
+					<string>(?&lt;!\\)"</string>
+					<key>end</key>
+					<string>"</string>
+					<key>name</key>
+					<string>string.quoted.double.spero</string>
+				</dict>
+
+				<!-- Character -->
+				<dict>
+					<key>match</key>
+					<string>'\\?.'</string>
+					<key>name</key>
+					<string>constant.character.literal.spero</string>
+				</dict>
+
+				<!-- Boolean -->
+				<dict>
+					<key>match</key>
+					<string>\b(false|true)\b</string>
+					<key>name</key>
+					<string>constant.language.spero</string>
+				</dict>
+
+				<!-- Number -->
+				<dict>
+					<key>match</key>
+					<string>\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)([LlFfUuDd]|UL|ul)?\b</string>
+					<key>name</key>
+					<string>constant.numeric.spero</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- Type/variable declarations -->
+		<key>declarations</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<!-- Variable declarations -->
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.declaration.spero</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.function.declaration</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?x)
+						\b(def|let|static|type)\s+
+						(([a-z$_][a-zA-Z0-9$_]*(_[^a-zA-Z0-9\s]+)?)|[^\w\[\(\:\_\s]+)</string>
+				</dict>
+
+				<!-- Type declarations -->
+				<dict>
+					<key>match</key>
+					<string>\b(def|let|static|type)\b</string>
+					<key>name</key>
+					<string>storage.modifier.access</string>
+				</dict>
+
+				<!-- Package declarations -->
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.scoping.spero</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.package.spero</string>
+						</dict>
+					</dict>
+
+					<key>match</key>
+					<string>\b(mod)\s+([\w\.]+)</string>
+					<key>name</key>
+					<string>meta.package.spero</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- Keywords -->
+		<key>keywords</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\b(else|if|do|while|for|yield|match)\b</string>
+					<key>name</key>
+					<string>keyword.control.flow.spero</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(super|self)\b</string>
+					<key>name</key>
+					<string>variable.language.spero</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!--
+		<key>empty-parentheses</key>
+		<dict>
+			<key>match</key>
+			<string>\(\)</string>
+			<key>name</key>
+			<string>meta.parentheses.spero</string>
+		</dict>
+		<key>inheritance</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.declaration.spero</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.other.inherited-class.spero</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(extends|with)\s+([^\s\{\(\[\]]+)</string>
+				</dict>
+			</array>
+		</dict>
+		<key>parameter-list</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>variable.parameter</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.class</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>([a-zA-Z$_][a-zA-Z0-9$_]*)\s*:\s*([A-Za-z0-9][\w|_|?|\.]*)?,?</string>
+				</dict>
+			</array>
+		</dict>
+		-->
+	</dict>
+	<key>scopeName</key>
+	<string>source.spero</string>
+	<!--<key>uuid</key>-->
+</dict>
+</plist>

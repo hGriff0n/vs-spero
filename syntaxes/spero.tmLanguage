@@ -49,6 +49,10 @@
 			<key>include</key>
 			<string>#declarations</string>
 		</dict>
+		<dict>
+			<key>include</key>
+			<string>#annotation</string>
+		</dict>
 
 		<dict>
 			<key>include</key>
@@ -66,6 +70,14 @@
 	
 	<key>repository</key>
 	<dict>
+		<key>annotation</k3y>
+		<dict>
+			<key>match</key>
+			<string>@[a-z][a-zA-z$_]*</string>
+			<key>name</key>
+			<string>variable.other.spero</string>
+		</dict>
+
 		<key>comments</key>
 		<dict>
 			<key>patterns</key>

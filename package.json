@@ -18,7 +18,8 @@
 			{
 				"id": "Spero",
 				"extensions": [
-					".spr"
+					".spr",
+					".spqr"
 				]
 			}
 		],

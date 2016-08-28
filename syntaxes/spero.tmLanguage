@@ -277,14 +277,14 @@
 					</dict>
 					<key>match</key>
 					<string>(?x)
-						\b(def|using|let|static|type)\s+
+						\b(def|let|static|using)\s+
 						(([a-z$_][a-zA-Z0-9$_]*(_[^a-zA-Z0-9\s]+)?)|[^\w\[\(\:\_\s]+)</string>
 				</dict>
 
 				<!-- Type declarations -->
 				<dict>
 					<key>match</key>
-					<string>\b(def|let|static|type)\b</string>
+					<string>\b(def|let|adt|static|using)\b</string>
 					<key>name</key>
 					<string>storage.modifier.access</string>
 				</dict>

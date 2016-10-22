@@ -56,15 +56,7 @@
 
 		<dict>
 			<key>include</key>
-			<string>#inheritance</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#empty-parentheses</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#parameter-list</string>
+			<string>#qualnames</string>
 		</dict>
 	</array>
 	
@@ -113,12 +105,12 @@
 					<key>match</key>
 					<string>(#).*$\n?</string>
 					<key>name</key>
-					<string>comment.line.spero</string>
+					<string>comment.line.number-sign.spero</string>
 				</dict>
 			</array>
 		</dict>
 
-		<!-- [A-Z][a-z]+ -->
+		<!-- mut ?[A-Z][a-z]+ -->
 		<key>type-name</key>
 		<dict>
 			<key>captures</key>
@@ -130,10 +122,10 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(\b([A-Z][\w]*))</string>
+			<string>(\b((mut )?[A-Z][\w]*&*))</string>
 		</dict>
 
-		<!-- use <import> | mod <name>. Highlighting currently broken -->
+		<!-- use <import> -->
 		<key>imports</key>
 		<dict>
 			<key>begin</key>
@@ -147,69 +139,45 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=[\n])</string>
+			<string>(?&lt;=[\n])</string>			<!-- stop the parsing at a new line -->
 			<key>name</key>
 			<string>meta.import.spero</string>
+			
 			<key>patterns</key>
 			<array>
+				<!-- allow for comments to highlight correctly within the use directive -->
 				<dict>
 					<key>include</key>
 					<string>#comments</string>
 				</dict>
-				<!-- This needs some work to get it to highlight right -->
+
+				<!-- Color rebinding -->
 				<dict>
 					<key>match</key>
-					<string>([^]s{;.]+)\s\.\s*</string>
+					<string>\b(as)\s+([^\s{;:},]+)\b</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.other.spero</string>		<!-- keyword.control.other.spero -->
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.function.declaration</string>
+						</dict>
+					</dict>
 					<key>name</key>
-					<string>variable.package.speroc</string>
+					<string>meta.import.rebind.spero</string>
 				</dict>
+				
+				<!-- Highlight all the variables  -->
 				<dict>
 					<key>match</key>
-					<string>([^\s{;.]+)\s*</string>
+					<string>([^\s{;:},]+)\s*</string>
 					<key>name</key>
 					<string>variable.import.spero</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>{</string>
-					<key>end</key>
-					<string>}</string>
-					<key>name</key>
-					<string>meta.import.selector.spero</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>captures</key>
-							<dict>
-								<key>1</key>
-								<dict>
-									<key>name</key>
-									<string>variable.import.renamed-from.spero</string>
-								</dict>
-								<key>2</key>
-								<dict>
-									<key>name</key>
-									<string>keyword.other.arrow.spero</string>
-								</dict>
-								<key>3</key>
-								<dict>
-									<key>name</key>
-									<string>variable.import.renamed-to.spero</string>
-								</dict>
-							</dict>
-							<key>match</key>
-							<string>(?x) \s*
-									([^\s.,}]+) \s*
-									(=&gt;) \s*
-									([^\s.,}]+) \s*</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>([^\s.,}]+)</string>
-							<key>name</key>
-							<string>variable.import.spero</string>
-						</dict>
-					</array>
 				</dict>
 			</array>
 		</dict>
@@ -223,6 +191,7 @@
 				<dict>
 					<key>begin</key>
 					<string>(?&lt;!\\)"</string>
+					<!-- look at adding in special highlighting for '{}'-->
 					<key>end</key>
 					<string>"</string>
 					<key>name</key>
@@ -248,7 +217,7 @@
 				<!-- Number -->
 				<dict>
 					<key>match</key>
-					<string>\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)([LlFfUuDd]|UL|ul)?\b</string>
+					<string>\b([0-9]+(\.[0-9]+)?|0b[0-1]+|0x[0-9a-fA-F]+)\b</string>
 					<key>name</key>
 					<string>constant.numeric.spero</string>
 				</dict>
@@ -260,7 +229,7 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<!-- Variable declarations -->
+				<!-- Highlight variable names in bindings -->
 				<dict>
 					<key>captures</key>
 					<dict>
@@ -276,15 +245,13 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?x)
-						\b(def|let|static|using)\s+
-						(([a-z$_][a-zA-Z0-9$_]*(_[^a-zA-Z0-9\s]+)?)|[^\w\[\(\:\_\s]+)</string>
+					<string>(?x) \b(def|let|static|using)\s+ (([a-z$_][a-zA-Z0-9$_]*(_[^a-zA-Z0-9\s]+)?)|[^\w\[\(\:\_\s]+)</string>
 				</dict>
 
-				<!-- Type declarations -->
+				<!-- Highlight context keywords for types -->
 				<dict>
 					<key>match</key>
-					<string>\b(def|let|adt|static|using)\b</string>
+					<string>\b(def|let|static)\b</string>
 					<key>name</key>
 					<string>storage.modifier.access</string>
 				</dict>
@@ -296,17 +263,17 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.other.scoping.spero</string>
+							<string>keyword.other.package.spero</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.package.spero</string>
+							<string>variable.package.spero</string>
 						</dict>
 					</dict>
 
 					<key>match</key>
-					<string>\b(mod)\s+([\w\.]+)</string>
+					<string>\b(mod)\s+([\w\:]+)</string>
 					<key>name</key>
 					<string>meta.package.spero</string>
 				</dict>
@@ -320,74 +287,41 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(else|if|do|while|for|yield|match)\b</string>
+					<string>\b(else|if|loop|while|for|yield|match)\b</string>
 					<key>name</key>
 					<string>keyword.control.flow.spero</string>
 				</dict>
 				<dict>
 					<key>match</key>
+					<string>\b(mut|impls)\b</string>
+					<key>name</key>
+					<string>keyword.control.other.spero</string>
+				</dict>
+				<dict>
+					<key>match</key>
 					<string>\b(super|self)\b</string>
 					<key>name</key>
-					<string>variable.language.spero</string>
+					<string>variable.parameter.spero</string>
 				</dict>
 			</array>
 		</dict>
 
-		<!--
-		<key>empty-parentheses</key>
+		<!-- Highlight modules in qualified names -->
+		<key>qualnames</key>
 		<dict>
 			<key>match</key>
-			<string>\(\)</string>
+			<string>([a-z$_][a-zA-Z0-9$_]*):</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>variable.package.spero</key>
+				</dict>
+			</dict>
 			<key>name</key>
-			<string>meta.parentheses.spero</string>
+			<string>meta.package.qualified.spero</string>
 		</dict>
-		<key>inheritance</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.declaration.spero</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>entity.other.inherited-class.spero</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(extends|with)\s+([^\s\{\(\[\]]+)</string>
-				</dict>
-			</array>
-		</dict>
-		<key>parameter-list</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>variable.parameter</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>entity.name.class</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>([a-zA-Z$_][a-zA-Z0-9$_]*)\s*:\s*([A-Za-z0-9][\w|_|?|\.]*)?,?</string>
-				</dict>
-			</array>
-		</dict>
-		-->
 	</dict>
 	<key>scopeName</key>
 	<string>source.spero</string>

@@ -20,7 +20,8 @@
 				"extensions": [
 					".spr",
 					".spqr"
-				]
+				],
+				"configuration": "./language-configuration.json"
 			}
 		],
 		"grammars": [

@@ -65,7 +65,7 @@
 		<key>annotation</k3y>
 		<dict>
 			<key>match</key>
-			<string>@[a-z][a-zA-z$_]*</string>
+			<string>@[a-z][a-zA-z$_]*!?</string>
 			<key>name</key>
 			<string>variable.other.spero</string>
 		</dict>
@@ -122,7 +122,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(\b((mut )?[A-Z][\w]*&*))</string>
+			<string>(\b((mut )?[A-Z][\w]*))</string>
 		</dict>
 
 		<!-- use <import> -->
@@ -280,6 +280,7 @@
 			</array>
 		</dict>
 
+		<!-- TODO: Highlight 'in' correctly (only in for loops) -->
 		<!-- Keywords -->
 		<key>keywords</key>
 		<dict>
@@ -287,13 +288,13 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(else|if|loop|while|for|yield|match)\b</string>
+					<string>\b(else|if|loop|while|for|match|yield|return|do)\b</string>
 					<key>name</key>
 					<string>keyword.control.flow.spero</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(mut|impls)\b</string>
+					<string>\b(mut|impls|in)\b</string>
 					<key>name</key>
 					<string>keyword.control.other.spero</string>
 				</dict>

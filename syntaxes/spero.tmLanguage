@@ -203,7 +203,7 @@
 					<key>match</key>
 					<string>'\\?.'</string>
 					<key>name</key>
-					<string>constant.character.literal.spero</string>
+					<string>string.quoted.single.spero</string>
 				</dict>
 
 				<!-- Boolean -->
@@ -253,29 +253,36 @@
 					<key>match</key>
 					<string>\b(def|let|static)\b</string>
 					<key>name</key>
-					<string>storage.modifier.access</string>
+					<string>keyword.declaration.spero</string>
 				</dict>
 
 				<!-- Package declarations -->
 				<dict>
-					<key>captures</key>
+					<key>begin</key>
+					<string>\b(mod)\s+</string>
+					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.other.package.spero</string>
+							<string>keyword.other.import.spero</string>
 						</dict>
-						<key>2</key>
+					</dict>
+					<key>end</key>
+					<string>(?&lt;=[\n])</string>			<!-- stop the parsing at a new line -->
+					<key>name</key>
+					<string>meta.package.spero</string>
+					
+					<key>patterns</key>
+					<array>						
+						<!-- Highlight all the variables  -->
 						<dict>
+							<key>match</key>
+							<string>([^\s{;:},]+)\s*</string>
 							<key>name</key>
 							<string>variable.package.spero</string>
 						</dict>
-					</dict>
-
-					<key>match</key>
-					<string>\b(mod)\s+([\w\:]+)</string>
-					<key>name</key>
-					<string>meta.package.spero</string>
+					</array>
 				</dict>
 			</array>
 		</dict>
@@ -288,13 +295,13 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(else|if|loop|while|for|match|yield|return|do)\b</string>
+					<string>\b(else|if|loop|while|for|match|yield|wait|return|do)\b</string>
 					<key>name</key>
 					<string>keyword.control.flow.spero</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(mut|impls|in)\b</string>
+					<string>\b(mut|impls|in|continue|break)\b</string>
 					<key>name</key>
 					<string>keyword.control.other.spero</string>
 				</dict>

@@ -1,5 +1,5 @@
 {
-	"name": "Spero",
+	"name": "spero",
 	"version": "0.1.0",
 	"description": "Spero support for Visual Studio Code",
 	"engines": {
@@ -17,10 +17,7 @@
 		"languages": [
 			{
 				"id": "Spero",
-				"extensions": [
-					".spr",
-					".spqr"
-				],
+				"extensions": [ ".spr", ".spqr"	],
 				"configuration": "./language-configuration.json"
 			}
 		],

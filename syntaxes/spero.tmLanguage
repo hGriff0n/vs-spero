@@ -245,7 +245,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?x) \b(def|let|static|using)\s+ (([a-z$_][a-zA-Z0-9$_]*(_[^a-zA-Z0-9\s]+)?)|[^\w\[\(\:\_\s]+)</string>
+					<string>(?x) \b(def|let|static|with)\s+ (([a-z_][a-zA-Z0-9_]*!?(_[^a-zA-Z0-9\s]+)?)|[^\w\[\(\:\_\s]+)</string>
 				</dict>
 
 				<!-- Highlight context keywords for types -->
@@ -295,13 +295,13 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(else|if|loop|while|for|match|yield|wait|return|do)\b</string>
+					<string>\b(else|if|loop|while|for|match|yield|wait|return|do|case|repeat)\b</string>
 					<key>name</key>
 					<string>keyword.control.flow.spero</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(mut|impls|in|continue|break)\b</string>
+					<string>\b(mut|impl|in|continue|break)\b</string>
 					<key>name</key>
 					<string>keyword.control.other.spero</string>
 				</dict>
@@ -318,7 +318,7 @@
 		<key>qualnames</key>
 		<dict>
 			<key>match</key>
-			<string>([a-z$_][a-zA-Z0-9$_]*):</string>
+			<string>([a-z][a-zA-Z0-9_]*):</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>

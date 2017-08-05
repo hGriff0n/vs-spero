@@ -1,33 +1,37 @@
 {
-	"name": "spero",
-	"version": "0.1.0",
-	"description": "Spero support for Visual Studio Code",
-	"engines": {
-		"vscode": ">=0.9.0-pre.1"
-	},
-	"publisher": "hGriff0n",
-	"categories": [
-		"Languages"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/hGriff0n/vs-spero.git"
-	},
-	"contributes": {
-		"languages": [
-			{
-				"id": "Spero",
-				"extensions": [ ".spr", ".spqr"	],
-				"configuration": "./language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "Spero",
-				"scopeName": "source.spero",
-				"path": "./syntaxes/spero.tmLanguage"
-			}
-		]
-	},
-	"editor.tabSize": 4
+    "name": "vs-spero",
+    "version": "1.0.0",
+    "description": "Spero support for Visual Studio Code",
+    "engines": {
+        "vscode": ">=0.9.0-pre.1"
+    },
+    "publisherName": "hGriff0n",
+    "publisher": "graysonhooper",
+    "categories": [
+        "Languages"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hGriff0n/vs-spero.git"
+    },
+    "contributes": {
+        "languages": [
+            {
+                "id": "Spero",
+                "extensions": [
+                    ".spr",
+                    ".spqr"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "Spero",
+                "scopeName": "source.spero",
+                "path": "./syntaxes/spero.tmLanguage"
+            }
+        ]
+    },
+    "editor.tabSize": 4
 }
